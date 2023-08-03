@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 // necessário para url
 app.use(bodyParser.urlencoded({ extended: false }));
 // rotas
-app.use('/routes', routes_1.Routes);
+app.use('/api', routes_1.Routes);
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`API aberta em http://localhost:${port}/`);

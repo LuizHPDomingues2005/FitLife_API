@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const bodyParser = require("body-parser");
 const routes_1 = require("./routes");
+require('dotenv').config();
 // criamos uma instancia de aplicativo express
 const app = express();
 // necessários para suportar tipo json

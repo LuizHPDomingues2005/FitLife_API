@@ -1,0 +1,14 @@
+npx tsc
+tsc
+npm i typescript --save-dev
+node dist/index.js
+node dist
+npm install --save express body-parser
+npm install --save-dev @types/node @types/express @types/body-parser
+npm install --save-dev nodemon concurrently
+npm tsc
+node tsc
+npx tsc
+node dist
+npx dist
+npm install --save @types/mssql

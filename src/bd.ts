@@ -1,8 +1,6 @@
+import { connect } from "http2"
+
 require('dotenv').config()
-
-
-
-console.log(process.env.DB_USER)
 
 const sql = require('mssql')
 
@@ -22,13 +20,15 @@ const sqlConfig = {
   }
 }
 
-try{
-  sql.connect(sqlConfig)
-}
-catch(err)
-{
-  console.log(err)
+function connectar(){
+  try {
+    sql.connect(sqlConfig)
+    console.log("Banco de Dados conectado com sucesso!")
+  }
+  catch (err) {
+    console.log(err)
+  }
 }
 
 
-module.exports = sql;
+module.exports = sql, connectar();

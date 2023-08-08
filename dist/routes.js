@@ -6,6 +6,7 @@ const bd = require('./bd');
 const router = (0, express_1.Router)();
 router.get('/', (req, res) => {
     res.send('Hello World!');
+    bd.connectar();
 });
 router.get('/connect', (req, res) => {
 });

@@ -1,6 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
-console.log(process.env.DB_USER);
 const sql = require('mssql');
 const sqlConfig = {
     user: process.env.DB_USER,
@@ -17,10 +17,13 @@ const sqlConfig = {
         trustServerCertificate: true // change to true for local dev / self-signed certs
     }
 };
-try {
-    sql.connect(sqlConfig);
+function connectar() {
+    try {
+        sql.connect(sqlConfig);
+        console.log("API Conectada com sucesso!");
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
-catch (err) {
-    console.log(err);
-}
-module.exports = sql;
+module.exports = sql, connectar();

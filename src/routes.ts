@@ -5,7 +5,7 @@ const router : Router = Router();
 
 router.get('/', (req: Request, res: Response) => {
     res.send('Hello World!');
-
+    bd.connectar();
 });
 
 router.get('/connect', (req: Request, res: Response) => {

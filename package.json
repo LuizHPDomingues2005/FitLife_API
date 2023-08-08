@@ -1,7 +1,6 @@
 {
-  "name": "fittlelifeapi",
+  "name": "fitlifeapi",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "npm run serve",
@@ -30,5 +29,6 @@
     "module-alias": "^2.2.3",
     "mssql": "^9.1.2",
     "ts-sql-query": "^1.53.0"
-  }
+  },
+  "description": ""
 }

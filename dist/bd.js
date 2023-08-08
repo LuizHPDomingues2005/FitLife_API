@@ -1,10 +1,11 @@
 "use strict";
-require('dotenv').config({ path: __dirname + '/.env' });
+require('dotenv').config();
+console.log(process.env.DB_USER);
 const sql = require('mssql');
 const sqlConfig = {
-    user: "BD21248",
-    password: "luiz05",
-    database: "BD21248",
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     server: 'regulus.cotuca.unicamp.br',
     pool: {
         max: 10,
@@ -16,7 +17,6 @@ const sqlConfig = {
         trustServerCertificate: true // change to true for local dev / self-signed certs
     }
 };
-console.log(process.env.DB_NAME);
 try {
     sql.connect(sqlConfig);
 }

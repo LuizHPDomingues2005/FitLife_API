@@ -1,6 +1,11 @@
 require('dotenv').config()
 
+
+
+console.log(process.env.DB_USER)
+
 const sql = require('mssql')
+
 const sqlConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -24,11 +29,6 @@ catch(err)
 {
   console.log(err)
 }
-
-
-
-
-
 
 
 module.exports = sql;

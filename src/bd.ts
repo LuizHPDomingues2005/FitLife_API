@@ -23,7 +23,6 @@ const sqlConfig = {
 function connectar(){
   try {
     sql.connect(sqlConfig)
-    console.log("Banco de Dados conectado com sucesso!")
   }
   catch (err) {
     console.log(err)

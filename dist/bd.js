@@ -20,7 +20,6 @@ const sqlConfig = {
 function connectar() {
     try {
         sql.connect(sqlConfig);
-        console.log("API Conectada com sucesso!");
     }
     catch (err) {
         console.log(err);

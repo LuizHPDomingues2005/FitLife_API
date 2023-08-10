@@ -8,7 +8,11 @@ router.get('/', (req: Request, res: Response) => {
     bd.connectar();
 });
 
-router.get('/connect', (req: Request, res: Response) => {
-});
+
+// USUARIO
+router.get('/usuario', (req: Request, res: Response) => {
+
+})
+
 
 export const Routes : Router = router;

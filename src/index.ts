@@ -1,7 +1,6 @@
 // importamos as bibliotecas necessárias
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { Routes } from './routes';
 
 require('dotenv').config()
 
@@ -14,7 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // rotas
-app.use('/api', Routes);
+app.use('/user', require('./routes/user'));
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

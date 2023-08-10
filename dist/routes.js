@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
     res.send('Hello World!');
     bd.connectar();
 });
-router.get('/connect', (req, res) => {
+// USUARIO
+router.get('/usuario', (req, res) => {
 });
 exports.Routes = router;

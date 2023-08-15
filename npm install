@@ -12,3 +12,4 @@ npx tsc
 node dist
 npx dist
 npm install --save @types/mssql
+npm install bcrypt

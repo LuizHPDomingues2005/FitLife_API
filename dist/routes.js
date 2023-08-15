@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Routes = void 0;
 const express_1 = require("express");
 const bd = require('./bd');
 const router = (0, express_1.Router)();
@@ -9,6 +8,5 @@ router.get('/', (req, res) => {
     bd.connectar();
 });
 // USUARIO
-router.get('/usuario', (req, res) => {
-});
-exports.Routes = router;
+router.use('/user', require('./routes/authUser.js'));
+module.exports = router;

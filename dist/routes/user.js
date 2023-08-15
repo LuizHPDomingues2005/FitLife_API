@@ -1,6 +1,5 @@
 "use strict";
-const router = require('express').Router();
-const bd = require('../bd');
+require('dotenv').config();
 // getAll
 router.get('/', (req, res) => {
     const query = 'SELECT * FROM usuario';
@@ -19,7 +18,6 @@ router.get('/', (req, res) => {
 // getUser
 router.get('/:idusuario', (req, res) => {
     const query = "SELECT * FROM usuario WHERE idUsuario = $1";
-    var request = new bd.Request();
     const value = [req.params.idusuario];
     console.log(value);
     bd.query(query, value, (err, data) => {

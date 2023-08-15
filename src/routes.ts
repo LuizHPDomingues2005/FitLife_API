@@ -3,16 +3,14 @@ const bd = require('./bd')
 
 const router : Router = Router();
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/', (req: any, res: any) => {
     res.send('Hello World!');
     bd.connectar();
 });
 
 
 // USUARIO
-router.get('/usuario', (req: Request, res: Response) => {
-
-})
+router.use('/user', require('./routes/authUser.js'))
 
 
-export const Routes : Router = router;
+module.exports = router;

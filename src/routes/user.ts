@@ -1,6 +1,5 @@
-const router = require('express').Router();
-const bd = require('../bd');
 
+require('dotenv').config();
 // getAll
 router.get('/', (req: any,res: any) => {
     const query = 'SELECT * FROM usuario';

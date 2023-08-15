@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const requireAuth = require('../middleware/requireAuth')
-const bd = require('../bd');
+const bd = require('../bdconfig.js');
 const bcrypt = require('bcrypt');
 
 require('dotenv').config();
@@ -16,10 +16,9 @@ router.post('/cadastro', (req: any, res: any) => {
             return;
         }
         
-        console.log(hash)
 
 
-        const query = "INSERT INTO USUARIO(idUsuario, nomeUsuario, emailUsuario, senhaUsuario) VALUES (DEFAULT, $1, $2, $3) RETURNING *";
+        const query = `INSERT INTO USUARIO(nomeUsuario, emailUsuario, senhaUsuario) VALUES (${1}, ${2}, ${3})`;
         const values = [req.body.nomeUsuario, req.body.emailUsuario, hash];
     
         bd.query(query, values, (err: any, data:any) => {
@@ -44,6 +43,9 @@ router.post('/cadastro', (req: any, res: any) => {
         })
     });
 })
+
+
+
 
 // login
 

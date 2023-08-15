@@ -2,6 +2,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
+
 require('dotenv').config()
 
 // criamos uma instancia de aplicativo express
@@ -11,6 +12,7 @@ const app: express.Application = express();
 app.use(bodyParser.json());
 // necessário para url
 app.use(bodyParser.urlencoded({ extended: false }));
+
 
 // rotas
 app.use('/user', require('./routes/authUser.js'));

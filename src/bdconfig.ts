@@ -29,5 +29,4 @@ function connectar(){
   }
 }
 
-
 module.exports = sql, connectar();

@@ -3,6 +3,7 @@ const router = require('express').Router();
 const requireAuth = require('../middleware/requireAuth');
 const bd = require('../bdconfig.js');
 const bcrypt = require('bcrypt');
+jwt = require('jsonwebtoken');
 require('dotenv').config();
 // Cadastro
 router.post('/cadastro', (req, res) => {
@@ -12,32 +13,22 @@ router.post('/cadastro', (req, res) => {
             res.status(500).send('Internal Server Error');
             return;
         }
-        const query = `INSERT INTO USUARIO(nomeUsuario, emailUsuario, senhaUsuario) VALUES (${1}, ${2}, ${3})`;
+        const query = `INSERT INTO USUARIO(nomeUsuario, emailUsuario, senhaUsuario) VALUES ('${req.body.nomeUsuario}', '${req.body.emailUsuario}', '${hash}')`;
         const values = [req.body.nomeUsuario, req.body.emailUsuario, hash];
-        bd.query(query, values, (err, data) => {
+        bd.query(query, (err, data) => {
             if (err) {
                 console.log("> " + err);
                 res.status(500).send('Internal Server Error');
                 return;
             }
-            const user = {
-                id: data.rows[0].idusuario,
-                username: data.rows[0].nomeusuario,
-                email: data.rows[0].emailusuario
-            };
-            const tok = jwt.sign(JSON.stringify(user), process.env.TOKEN_SECRET);
-            res.status(200).send({
-                token: tok,
-                user: user
-            });
+            res.status(200).send("Created");
         });
     });
 });
 // login
 router.post('/login', (req, res) => {
-    const query = "SELECT * FROM Usuario WHERE emailUsuario = $1";
-    const values = [req.body.emailUsuario];
-    bd.query(query, values, (err, data) => {
+    const query = `SELECT * FROM Usuario WHERE emailUsuario = '${req.body.emailUsuario}'`;
+    bd.query(query, (err, data) => {
         if (err) {
             console.log("> " + err);
             res.status(500).send('Internal Server Error');
@@ -47,7 +38,8 @@ router.post('/login', (req, res) => {
             res.status(404).send('Not Found');
             return;
         }
-        bcrypt.compare(req.body.senhaUsuario, data.rows[0].senhausuario, (err, same) => {
+        console.log(data);
+        bcrypt.compare(req.body.senhaUsuario, data.recordset[0].senhaUsuario, (err, same) => {
             if (err) {
                 console.log("> " + err);
                 res.status(500).send('Internal Server Error');
@@ -58,9 +50,9 @@ router.post('/login', (req, res) => {
                 return;
             }
             const user = {
-                id: data.rows[0].idusuario,
-                username: data.rows[0].nomeusuario,
-                email: data.rows[0].emailusuario
+                id: data.recordset[0].idusuario,
+                username: data.recordset[0].nomeusuario,
+                email: data.recordset[0].emailusuario
             };
             const tok = jwt.sign(JSON.stringify(user), process.env.TOKEN_SECRET);
             res.status(200).send({

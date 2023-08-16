@@ -1,5 +1,5 @@
 "use strict";
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
     const header = req.headers.authorization.split(' ');
     const method = header[0];

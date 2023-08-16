@@ -2,7 +2,7 @@ const router = require('express').Router();
 const requireAuth = require('../middleware/requireAuth')
 const bd = require('../bdconfig.js');
 const bcrypt = require('bcrypt');
-jwt = require('jsonwebtoken');
+const jwtUser = require('jsonwebtoken');
 
 require('dotenv').config();
 // Cadastro
@@ -54,7 +54,6 @@ router.post('/login', (req: any, res: any) => {
             return;
         }
         
-        console.log(data)
         bcrypt.compare(req.body.senhaUsuario, data.recordset[0].senhaUsuario, (err: any, same: any) => {
             if (err) {
                 console.log("> " + err)
@@ -73,7 +72,7 @@ router.post('/login', (req: any, res: any) => {
                 email: data.recordset[0].emailusuario
             }
 
-            const tok = jwt.sign(JSON.stringify(user), process.env.TOKEN_SECRET);
+            const tok = jwtUser.sign(JSON.stringify(user), process.env.TOKEN_SECRET);
 
             res.status(200).send({
                 token: tok,

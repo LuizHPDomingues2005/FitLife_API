@@ -9,7 +9,6 @@ require('dotenv').config();
 
 router.post('/cadastro', (req: any, res: any) => {
 
-    
     bcrypt.hash(req.body.senhaUsuario, 10, (err: any, hash: any) => {
         if (err) {
             console.log("> " + err)
@@ -18,7 +17,6 @@ router.post('/cadastro', (req: any, res: any) => {
         }
         
         const query = `INSERT INTO USUARIO(nomeUsuario, emailUsuario, senhaUsuario) VALUES ('${req.body.nomeUsuario}', '${req.body.emailUsuario}', '${hash}')`;
-        const values = [req.body.nomeUsuario, req.body.emailUsuario, hash];
 
         bd.query(query, (err: any, data:any) => {
             if (err) {

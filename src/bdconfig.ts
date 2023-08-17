@@ -20,13 +20,5 @@ const sqlConfig = {
   }
 }
 
-function connectar(){
-  try {
-    sql.connect(sqlConfig)
-  }
-  catch (err) {
-    console.log(err)
-  }
-}
 
-module.exports = sql, connectar();
+module.exports = sql;

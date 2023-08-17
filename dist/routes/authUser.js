@@ -13,8 +13,8 @@ router.post('/cadastro', (req, res) => {
             res.status(500).send('Internal Server Error');
             return;
         }
-        const query = `INSERT INTO USUARIO(nomeUsuario, emailUsuario, senhaUsuario) VALUES ('${req.body.nomeUsuario}', '${req.body.emailUsuario}', '${hash}')`;
-        const values = [req.body.nomeUsuario, req.body.emailUsuario, hash];
+        const newUser = novoUsuario(0, req.body.nomeUsuario, req.body.emailUsuario, hash);
+        const query = `INSERT INTO USUARIO(nomeUsuario, emailUsuario, senhaUsuario) VALUES ('${newUser.nomeUsuario}', '${newUser.emailUsuario}', '${newUser.senhaUsuario}')`;
         bd.query(query, (err, data) => {
             if (err) {
                 console.log("> " + err);

@@ -10,53 +10,53 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
-var _Usuario_idUsuario, _Usuario_nomeUsuario, _Usuario_email, _Usuario_senha;
+var _Usuario_idUsuario, _Usuario_nomeUsuario, _Usuario_emailUsuario, _Usuario_senhaUsuario;
 class Usuario {
-    constructor(idUsuario, nomeUsuario, email, senha) {
+    constructor(idUsuario, nomeUsuario, emailUsuario, senhaUsuario) {
         _Usuario_idUsuario.set(this, 0);
         _Usuario_nomeUsuario.set(this, "");
-        _Usuario_email.set(this, "");
-        _Usuario_senha.set(this, "");
+        _Usuario_emailUsuario.set(this, "");
+        _Usuario_senhaUsuario.set(this, "");
         this.idUsuario = idUsuario;
         this.nomeUsuario = nomeUsuario;
-        this.email = email;
-        this.senha = senha;
+        this.emailUsuario = emailUsuario;
+        this.senhaUsuario = senhaUsuario;
     }
     get idUsuario() {
         return __classPrivateFieldGet(this, _Usuario_idUsuario, "f");
     }
-    get senha() {
-        return __classPrivateFieldGet(this, _Usuario_senha, "f");
+    get senhaUsuario() {
+        return __classPrivateFieldGet(this, _Usuario_senhaUsuario, "f");
     }
     get nomeUsuario() {
         return __classPrivateFieldGet(this, _Usuario_nomeUsuario, "f");
     }
-    get email() {
-        return __classPrivateFieldGet(this, _Usuario_email, "f");
+    get emailUsuario() {
+        return __classPrivateFieldGet(this, _Usuario_emailUsuario, "f");
     }
     set idUsuario(idUsuario) {
         if (idUsuario === undefined || typeof idUsuario !== 'string' || idUsuario === "")
             throw ('idUsuario inválida');
         __classPrivateFieldSet(this, _Usuario_idUsuario, idUsuario, "f");
     }
-    set senha(senha) {
-        if (senha === undefined || typeof senha !== 'string' || senha === "")
-            throw ('senha inválida');
-        __classPrivateFieldSet(this, _Usuario_senha, senha, "f");
+    set senhaUsuario(senhaUsuario) {
+        if (senhaUsuario === undefined || typeof senhaUsuario !== 'string' || senhaUsuario === "")
+            throw ('senhaUsuario inválida');
+        __classPrivateFieldSet(this, _Usuario_senhaUsuario, senhaUsuario, "f");
     }
     set nomeUsuario(nomeUsuario) {
         if (nomeUsuario === undefined || typeof nomeUsuario !== 'string' || nomeUsuario === "")
             throw ('nomeUsuario inválido');
         __classPrivateFieldSet(this, _Usuario_nomeUsuario, nomeUsuario, "f");
     }
-    set email(email) {
-        if (email === undefined || typeof email !== 'string' || email === "")
-            throw ('email inválido');
-        __classPrivateFieldSet(this, _Usuario_email, email, "f");
+    set emailUsuario(emailUsuario) {
+        if (emailUsuario === undefined || typeof emailUsuario !== 'string' || emailUsuario === "")
+            throw ('emailUsuario inválido');
+        __classPrivateFieldSet(this, _Usuario_emailUsuario, emailUsuario, "f");
     }
 }
-_Usuario_idUsuario = new WeakMap(), _Usuario_nomeUsuario = new WeakMap(), _Usuario_email = new WeakMap(), _Usuario_senha = new WeakMap();
-function novoUsuario(idUsuario, nomeUsuario, email, senha) {
-    return new Usuario(idUsuario, nomeUsuario, email, senha);
+_Usuario_idUsuario = new WeakMap(), _Usuario_nomeUsuario = new WeakMap(), _Usuario_emailUsuario = new WeakMap(), _Usuario_senhaUsuario = new WeakMap();
+function novoUsuario(idUsuario, nomeUsuario, emailUsuario, senhaUsuario) {
+    return new Usuario(idUsuario, nomeUsuario, emailUsuario, senhaUsuario);
 }
 module.exports = { novoUsuario };

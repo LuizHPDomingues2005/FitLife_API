@@ -2,15 +2,15 @@ class Usuario
 {
     #idUsuario:         number = 0
     #nomeUsuario:       string = ""
-    #email:             string = ""
-    #senha:             string = ""
+    #emailUsuario:      string = ""
+    #senhaUsuario:      string = ""
     
-    constructor (idUsuario: number, nomeUsuario: string, email: string, senha: string)
+    constructor (idUsuario: number, nomeUsuario: string, emailUsuario: string, senhaUsuario: string)
     {
         this.idUsuario        = idUsuario;
         this.nomeUsuario      = nomeUsuario;
-        this.email            = email;
-        this.senha     = senha;
+        this.emailUsuario     = emailUsuario;
+        this.senhaUsuario     = senhaUsuario;
     }
 
 
@@ -19,9 +19,9 @@ class Usuario
         return this.#idUsuario
     }
 
-    get senha ()
+    get senhaUsuario ()
     {
-        return this.#senha
+        return this.#senhaUsuario
     }
 
     get nomeUsuario ()
@@ -30,9 +30,9 @@ class Usuario
     }
 
 
-    get email ()
+    get emailUsuario ()
     {
-        return this.#email
+        return this.#emailUsuario
     }
 
     set idUsuario (idUsuario)
@@ -43,12 +43,12 @@ class Usuario
         this.#idUsuario = idUsuario;
     }
 
-    set senha (senha)
+    set senhaUsuario (senhaUsuario)
     {
-        if (senha===undefined || typeof senha !== 'string' || senha==="")
-            throw ('senha inválida');
+        if (senhaUsuario===undefined || typeof senhaUsuario !== 'string' || senhaUsuario==="")
+            throw ('senhaUsuario inválida');
 
-        this.#senha = senha;
+        this.#senhaUsuario = senhaUsuario;
     }
 
     set nomeUsuario (nomeUsuario)
@@ -59,21 +59,21 @@ class Usuario
         this.#nomeUsuario = nomeUsuario;
     }
 
-    set email (email)
+    set emailUsuario (emailUsuario)
     {
-        if (email===undefined || typeof email !== 'string' || email==="")
-            throw ('email inválido');
+        if (emailUsuario===undefined || typeof emailUsuario !== 'string' || emailUsuario==="")
+            throw ('emailUsuario inválido');
 
-        this.#email = email;
+        this.#emailUsuario = emailUsuario;
     }
 
     
 
 }
 
-function novoUsuario (idUsuario: number, nomeUsuario: string, email: string, senha: string)
+function novoUsuario (idUsuario: number, nomeUsuario: string, emailUsuario: string, senhaUsuario: string)
 {
-    return new Usuario (idUsuario, nomeUsuario, email, senha);
+    return new Usuario (idUsuario, nomeUsuario, emailUsuario, senhaUsuario);
 }
 
 module.exports = {novoUsuario}

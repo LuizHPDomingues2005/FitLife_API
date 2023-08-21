@@ -13,9 +13,13 @@ app.use(bodyParser.json());
 // necessário para url
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//////////////////////////////////////////////////////////////////////
 
 // rotas
 app.use('/user', require('./routes/authUser.js'));
+app.use('/infouser', require('./routes/userInfo.js'))
+
+//////////////////////////////////////////////////////////////////////
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

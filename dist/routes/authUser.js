@@ -1,7 +1,7 @@
 "use strict";
-const router = require('express').Router();
+var router = require('express').Router();
+var bd = require('../bdconfig.js');
 const requireAuth = require('../middleware/requireAuth');
-const bd = require('../bdconfig.js');
 const bcrypt = require('bcrypt');
 const jwtUser = require('jsonwebtoken');
 require('dotenv').config();
@@ -11,7 +11,6 @@ router.get('/', (req, res) => {
     bd.query(query, (err, data) => {
         if (err) {
             res.status(400).send('Bad Request');
-            console.log(err);
             return;
         }
         if (data.recordsets == 0) {

@@ -7,6 +7,25 @@ const jwtUser = require('jsonwebtoken');
 require('dotenv').config();
 // Cadastro
 
+router.get('/', (req: any,res: any) => {
+    const query = 'SELECT * FROM USUARIO';
+
+    bd.query(query, (err: any, data: any) => {
+        if (err) {
+            res.status(400).send('Bad Request');
+            return;
+        }
+
+        if (data.recordsets == 0) {
+            res.status(404).send('Not Found')
+            return;
+        }
+
+        res.status(200).send(data.recordsets);
+    });
+})
+
+
 router.post('/cadastro', (req: any, res: any) => {
 
     bcrypt.hash(req.body.senhaUsuario, 10, (err: any, hash: any) => {

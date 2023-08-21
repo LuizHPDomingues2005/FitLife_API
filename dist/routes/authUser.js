@@ -6,6 +6,21 @@ const bcrypt = require('bcrypt');
 const jwtUser = require('jsonwebtoken');
 require('dotenv').config();
 // Cadastro
+router.get('/', (req, res) => {
+    const query = 'SELECT * FROM USUARIO';
+    bd.query(query, (err, data) => {
+        if (err) {
+            res.status(400).send('Bad Request');
+            console.log(err);
+            return;
+        }
+        if (data.recordsets == 0) {
+            res.status(404).send('Not Found');
+            return;
+        }
+        res.status(200).send(data.recordsets);
+    });
+});
 router.post('/cadastro', (req, res) => {
     bcrypt.hash(req.body.senhaUsuario, 10, (err, hash) => {
         if (err) {
@@ -13,8 +28,7 @@ router.post('/cadastro', (req, res) => {
             res.status(500).send('Internal Server Error');
             return;
         }
-        const newUser = novoUsuario(0, req.body.nomeUsuario, req.body.emailUsuario, hash);
-        const query = `INSERT INTO USUARIO(nomeUsuario, emailUsuario, senhaUsuario) VALUES ('${newUser.nomeUsuario}', '${newUser.emailUsuario}', '${newUser.senhaUsuario}')`;
+        const query = `INSERT INTO USUARIO(nomeUsuario, emailUsuario, senhaUsuario) VALUES ('${req.body.nomeUsuario}', '${req.body.emailUsuario}', '${hash}')`;
         bd.query(query, (err, data) => {
             if (err) {
                 console.log("> " + err);

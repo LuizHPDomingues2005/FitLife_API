@@ -1,7 +1,7 @@
 // importamos as bibliotecas necessárias
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-
+const cors = require('cors')
 
 require('dotenv').config()
 
@@ -12,6 +12,9 @@ const app: express.Application = express();
 app.use(bodyParser.json());
 // necessário para url
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// cors
+app.use(cors())
 
 //////////////////////////////////////////////////////////////////////
 

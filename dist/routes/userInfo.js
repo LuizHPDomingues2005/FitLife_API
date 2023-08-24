@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 var router = require('express').Router();
 var bd = require('../bdconfig.js');
@@ -12,7 +13,7 @@ router.get('/get/:idUsuario', (req, res) => {
             res.status(400).send('Bad Request');
             return;
         }
-        if (data.recordsets == 0) {
+        if (data.recordset[0] == null) {
             res.status(404).send('Not Found');
             return;
         }
@@ -20,7 +21,7 @@ router.get('/get/:idUsuario', (req, res) => {
     });
 });
 router.post('/cadastro', (req, res) => {
-    const infoUser = {
+    const novoInfoUser = {
         idUsuario: req.body.idUsuario,
         pesoKg: req.body.peso,
         idade: req.body.idade,
@@ -30,18 +31,54 @@ router.post('/cadastro', (req, res) => {
     const query = `INSERT INTO InfoUsuario 
         (idUsuario, pesoKg, idade, genero, alturaCM)
         values 
-        (${infoUser.idUsuario}, 
-        ${infoUser.pesoKg}, 
-        ${infoUser.idade}, 
-        '${infoUser.genero}', 
-        ${infoUser.alturaCm})`;
+        (${novoInfoUser.idUsuario}, 
+        ${novoInfoUser.pesoKg}, 
+        ${novoInfoUser.idade}, 
+        '${novoInfoUser.genero}', 
+        ${novoInfoUser.alturaCm})`;
+    bd.query(query, (err) => {
+        if (err) {
+            console.log("> " + err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        res.status(201).send("Created");
+    });
+});
+router.put('/atualizar/:idUsuario', (req, res) => {
+    const idUsuario = req.params.idUsuario;
+    const query = `SELECT * FROM USUARIO WHERE idUsuario = ${idUsuario}`;
     bd.query(query, (err, data) => {
         if (err) {
             console.log("> " + err);
             res.status(500).send('Internal Server Error');
             return;
         }
-        res.status(200).send("Created");
+        if (data.recordset[0] == null) {
+            res.status(404).send('Not found');
+            return;
+        }
+    });
+    const novoInfoUser = {
+        pesoKg: req.body.peso,
+        idade: req.body.idade,
+        genero: req.body.genero,
+        alturaCm: req.body.altura
+    };
+    const query2 = `UPDATE InfoUsuario SET
+        pesoKg = ${novoInfoUser.pesoKg}, 
+        idade = ${novoInfoUser.idade}, 
+        genero = '${novoInfoUser.genero}', 
+        alturaCM = ${novoInfoUser.alturaCm} 
+        WHERE idUsuario = ${idUsuario}`;
+    console.log(query2);
+    bd.query(query2, (err) => {
+        if (err) {
+            console.log("> " + err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        res.status(201).send("Updated");
     });
 });
 module.exports = router;

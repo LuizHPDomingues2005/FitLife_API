@@ -5,11 +5,16 @@
     "outDir": "dist",
     "strict": true,
     "forceConsistentCasingInFileNames": true
+
   },
   "include": [
     "src/**/*.ts"
   ],
   "exclude": [
     "node_modules"
+  ],
+  "typeRoots": [
+    "./src/@types",
+    "./node_modules/@types"
   ]
 }

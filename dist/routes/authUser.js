@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var router = require('express').Router();
 var bd = require('../bdconfig.js');
 const requireAuth = require('../middleware/requireAuth');
@@ -13,7 +14,7 @@ router.get('/', (req, res) => {
             res.status(400).send('Bad Request');
             return;
         }
-        if (data.recordsets == 0) {
+        if (data.recordset[0] == null) {
             res.status(404).send('Not Found');
             return;
         }
@@ -28,13 +29,13 @@ router.post('/cadastro', (req, res) => {
             return;
         }
         const query = `INSERT INTO USUARIO(nomeUsuario, emailUsuario, senhaUsuario) VALUES ('${req.body.nomeUsuario}', '${req.body.emailUsuario}', '${hash}')`;
-        bd.query(query, (err, data) => {
+        bd.query(query, (err) => {
             if (err) {
                 console.log("> " + err);
                 res.status(500).send('Internal Server Error');
                 return;
             }
-            res.status(200).send("Created");
+            res.status(201).send("Created");
         });
     });
 });
@@ -47,7 +48,7 @@ router.post('/login', (req, res) => {
             res.status(500).send('Internal Server Error');
             return;
         }
-        if (data.rowCount == 0) {
+        if (data.recordset[0] == null) {
             res.status(404).send('Not Found');
             return;
         }
@@ -76,5 +77,73 @@ router.post('/login', (req, res) => {
 });
 router.post('/authorized', requireAuth, (req, res) => {
     res.status(200).send(res.locals.cookie);
+});
+router.put('/atualizar/:idUsuario', (req, res) => {
+    const idUsuario = req.params.idUsuario;
+    const query = `SELECT * FROM USUARIO WHERE idUsuario = ${idUsuario}`;
+    bd.query(query, (err, data) => {
+        if (err) {
+            console.log("> " + err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        if (data.recordsets.length == 0) {
+            res.status(404).send('Not found');
+            return;
+        }
+    });
+    bcrypt.hash(req.body.senhaUsuario, 10, (err, hash) => {
+        if (err) {
+            console.log("> " + err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        const novosDadosuser = {
+            nomeUsuario: req.body.nomeUsuario,
+            emailUsuario: req.body.emailUsuario,
+            senhaUsuario: hash
+        };
+        const query2 = `UPDATE USUARIO SET nomeUsuario = '${novosDadosuser.nomeUsuario}', emailUsuario = '${novosDadosuser.emailUsuario}', senhaUsuario = '${novosDadosuser.senhaUsuario}' WHERE idUsuario = ${idUsuario}`;
+        bd.query(query2, (err) => {
+            if (err) {
+                console.log("> " + err);
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+            res.status(201).send("Updated");
+        });
+    });
+});
+router.delete('/delete/:idUsuario', (req, res) => {
+    const idUsuario = req.params.idUsuario;
+    const query = `SELECT * FROM USUARIO WHERE idUsuario = ${idUsuario}`;
+    bd.query(query, (err, data) => {
+        if (err) {
+            console.log("> " + err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        if (data.recordset[0] == null) {
+            res.status(404).send('Not found');
+            return;
+        }
+        const query2 = `DELETE FROM InfoUsuario WHERE idUsuario = ${idUsuario}`;
+        bd.query(query2, (err) => {
+            if (err) {
+                console.log("> " + err);
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+        });
+        const query3 = `DELETE FROM USUARIO WHERE idUsuario = ${idUsuario}`;
+        bd.query(query3, (err) => {
+            if (err) {
+                console.log("> " + err);
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+        });
+        res.status(200).send("Ok");
+    });
 });
 module.exports = router;

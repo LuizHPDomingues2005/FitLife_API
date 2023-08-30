@@ -1,5 +1,3 @@
-import { Http2ServerRequest } from "http2";
-
 var router = require('express').Router();
 var bd = require('../bdconfig.js');
 const requireAuth = require('../middleware/requireAuth')

@@ -21,6 +21,7 @@ app.use(cors())
 // rotas
 app.use('/user', require('./routes/authUser.js'));
 app.use('/infouser', require('./routes/userInfo.js'))
+app.use('/planoAlimentacao', require('./routes/planoAlimentacao.js'))
 
 //////////////////////////////////////////////////////////////////////
 

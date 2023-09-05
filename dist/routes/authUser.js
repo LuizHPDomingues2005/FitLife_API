@@ -3,10 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var router = require('express').Router();
 var bd = require('../bdconfig.js');
 const requireAuth = require('../middleware/requireAuth');
-const bcrypt = require('bcrypt');
-const jwtUser = require('jsonwebtoken');
 require('dotenv').config();
-// Cadastro
+const jwtUser = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 router.get('/', (req, res) => {
     const query = 'SELECT * FROM USUARIO';
     bd.query(query, (err, data) => {
@@ -21,6 +20,7 @@ router.get('/', (req, res) => {
         res.status(200).send(data.recordsets);
     });
 });
+// Cadastro
 router.post('/cadastro', (req, res) => {
     bcrypt.hash(req.body.senhaUsuario, 10, (err, hash) => {
         if (err) {
@@ -63,9 +63,9 @@ router.post('/login', (req, res) => {
                 return;
             }
             const user = {
-                id: data.recordset[0].idusuario,
-                username: data.recordset[0].nomeusuario,
-                email: data.recordset[0].emailusuario
+                id: data.recordset[0].idUsuario,
+                username: data.recordset[0].nomeUsuario,
+                email: data.recordset[0].emailUsuario
             };
             const tok = jwtUser.sign(JSON.stringify(user), process.env.TOKEN_SECRET);
             res.status(200).send({

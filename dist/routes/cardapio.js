@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 var router = require('express').Router();
 var bd = require('../bdconfig.js');
-router.get('/get/:idPlanoAlimentacao', (req, res) => {
-    const idPlanoAlimentacao = req.params.idPlanoAlimentacao;
-    const query = `SELECT * FROM PlanoDeAlimentacao WHERE idPlanoAlimentacao = ${idPlanoAlimentacao}`;
+router.get('/get/:idCardapio', (req, res) => {
+    const idCardapio = req.params.idCardapio;
+    const query = `SELECT * FROM Cardapio WHERE idCardapio = ${idCardapio}`;
     bd.query(query, (err, data) => {
         if (err) {
             console.log("> " + err);
@@ -20,13 +20,13 @@ router.get('/get/:idPlanoAlimentacao', (req, res) => {
     });
 });
 router.post('/cadastro', (req, res) => {
-    const novoPlanoAlimentacao = {
-        nomePlanoAlimentacao: req.body.nomePlanoAlimentacao
+    const novoCardapio = {
+        nomeCardapio: req.body.nomeCardapio
     };
-    const query = `INSERT INTO PlanoDeAlimentacao 
-        (nomePlanoAlimentacao)
+    const query = `INSERT INTO Cardapio 
+        (nomeCardapio)
         values 
-        ('${novoPlanoAlimentacao.nomePlanoAlimentacao}')`;
+        ('${novoCardapio.nomeCardapio}')`;
     bd.query(query, (err) => {
         if (err) {
             console.log("> " + err);
@@ -36,9 +36,9 @@ router.post('/cadastro', (req, res) => {
         res.status(201).send("Created");
     });
 });
-router.put('/atualizar/:idPlanoAlimentacao', (req, res) => {
-    const idPlanoAlimentacao = req.params.idPlanoAlimentacao;
-    const query = `SELECT * FROM PlanoDeAlimentacao WHERE idPlanoAlimentacao = ${idPlanoAlimentacao}`;
+router.put('/atualizar/:idCardapio', (req, res) => {
+    const idCardapio = req.params.idCardapio;
+    const query = `SELECT * FROM Cardapio WHERE idCardapio = ${idCardapio}`;
     bd.query(query, (err, data) => {
         if (err) {
             console.log("> " + err);
@@ -49,12 +49,12 @@ router.put('/atualizar/:idPlanoAlimentacao', (req, res) => {
             res.status(404).send('Not Found');
             return;
         }
-        const novoPlanoAlimentacao = {
-            nomePlanoAlimentacao: req.body.nomePlanoAlimentacao
+        const novoCardapio = {
+            nomeCardapio: req.body.nomeCardapio
         };
-        const query2 = `UPDATE PlanoDeAlimentacao SET
-        nomePlanoAlimentacao = '${novoPlanoAlimentacao.nomePlanoAlimentacao}'
-        WHERE idPlanoAlimentacao = ${idPlanoAlimentacao}`;
+        const query2 = `UPDATE Cardapio SET
+        nomeCardapio = '${novoCardapio.nomeCardapio}'
+        WHERE idCardapio = ${idCardapio}`;
         bd.query(query2, (err) => {
             if (err) {
                 console.log("> " + err);
@@ -65,9 +65,9 @@ router.put('/atualizar/:idPlanoAlimentacao', (req, res) => {
         res.status(201).send("Updated");
     });
 });
-router.delete('/delete/:idPlanoAlimentacao', (req, res) => {
-    const idPlanoAlimentacao = req.params.idPlanoAlimentacao;
-    const query = `SELECT * FROM PlanoDeAlimentacao WHERE idPlanoAlimentacao = ${idPlanoAlimentacao}`;
+router.delete('/delete/:idCardapio', (req, res) => {
+    const idCardapio = req.params.idCardapio;
+    const query = `SELECT * FROM Cardapio WHERE idCardapio = ${idCardapio}`;
     bd.query(query, (err, data) => {
         if (err) {
             console.log("> " + err);
@@ -78,7 +78,7 @@ router.delete('/delete/:idPlanoAlimentacao', (req, res) => {
             res.status(404).send('Not found');
             return;
         }
-        const query2 = `DELETE FROM PlanoDeAlimentacao WHERE idPlanoAlimentacao = ${idPlanoAlimentacao}`;
+        const query2 = `DELETE FROM Cardapio WHERE idCardapio = ${idCardapio}`;
         bd.query(query2, (err) => {
             if (err) {
                 console.log("> " + err);

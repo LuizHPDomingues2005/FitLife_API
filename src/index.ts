@@ -22,6 +22,11 @@ app.use(cors())
 app.use('/user', require('./routes/authUser.js'));
 app.use('/infouser', require('./routes/userInfo.js'))
 app.use('/planoAlimentacao', require('./routes/planoAlimentacao.js'))
+app.use('/planoTreino', require('./routes/planoTreino.js'))
+app.use('/cardapio', require('./routes/cardapio.js'))
+app.use('/exercicio', require('./routes/exercicio.js'))
+
+
 
 //////////////////////////////////////////////////////////////////////
 

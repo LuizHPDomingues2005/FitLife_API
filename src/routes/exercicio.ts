@@ -6,11 +6,30 @@ var router = require('express').Router();
 var bd = require('../bdconfig.js');
 
 
+// getAll
+router.get('/get/', (req: Request, res: Response) => {
+    const query = `SELECT * FROM Exercicio`;
+
+    bd.query(query, (err: any, data: any) => {
+        if (err) {
+            console.log("> " + err)
+            res.status(400).send('Bad Request');
+            return;
+        }
+
+        if (data.recordset[0] == null) {
+            res.status(404).send('Not Found')
+            return;
+        }
+
+        res.status(200).send(data.recordsets);
+    });
+});
 
 
-router.get('/get/:idPlanoAlimentacao', (req: Request, res: Response) => {
-    const idPlanoAlimentacao = req.params.idPlanoAlimentacao;
-    const query = `SELECT * FROM PlanoDeAlimentacao WHERE idPlanoAlimentacao = ${idPlanoAlimentacao}`;
+router.get('/get/:idExercicio', (req: Request, res: Response) => {
+    const idExercicio = req.params.idExercicio;
+    const query = `SELECT * FROM Exercicio WHERE idExercicio = ${idExercicio}`;
 
     bd.query(query, (err: any, data: any) => {
         if (err) {
@@ -30,15 +49,21 @@ router.get('/get/:idPlanoAlimentacao', (req: Request, res: Response) => {
 
 router.post('/cadastro', (req: Request, res: Response) => {
 
-    const novoPlanoAlimentacao = {
-        nomePlanoAlimentacao: req.body.nomePlanoAlimentacao
+    const novoExercicio = {
+        nomeExercicio: req.body.nomeExercicio,
+        series       : req.body.series,
+        repeticoes   : req.body.repeticoes,
+        tempo        : req.body.tempo
     }
 
     const query =
-        `INSERT INTO PlanoDeAlimentacao 
-        (nomePlanoAlimentacao)
+        `INSERT INTO Exercicio 
+        (nomeExercicio, series, repeticoes, tempoS)
         values 
-        ('${novoPlanoAlimentacao.nomePlanoAlimentacao}')`
+        ('${novoExercicio.nomeExercicio}',
+          ${novoExercicio.series},
+          ${novoExercicio.repeticoes},
+          ${novoExercicio.tempo})`
 
     bd.query(query, (err: MSSQLError) => {
         if (err) {
@@ -52,10 +77,10 @@ router.post('/cadastro', (req: Request, res: Response) => {
     })
 });
 
-router.put('/atualizar/:idPlanoAlimentacao', (req: any, res: any) => {
+router.put('/atualizar/:idExercicio', (req: any, res: any) => {
 
-    const idPlanoAlimentacao = req.params.idPlanoAlimentacao;
-    const query = `SELECT * FROM PlanoDeAlimentacao WHERE idPlanoAlimentacao = ${idPlanoAlimentacao}`;
+    const idExercicio = req.params.idExercicio;
+    const query = `SELECT * FROM Exercicio WHERE idExercicio = ${idExercicio}`;
 
     bd.query(query, (err: MSSQLError, data: Data<JSON>) => {
         if (err) {
@@ -68,15 +93,22 @@ router.put('/atualizar/:idPlanoAlimentacao', (req: any, res: any) => {
             return;
         }
         
-        const novoPlanoAlimentacao = {
-            nomePlanoAlimentacao: req.body.nomePlanoAlimentacao
+        const novoExercicio = {
+            nomeExercicio: req.body.nomeExercicio,
+            series       : req.body.series,
+            repeticoes   : req.body.repeticoes,
+            tempo        : req.body.tempo
         }
     
     
         const query2 =
-        `UPDATE PlanoDeAlimentacao SET
-        nomePlanoAlimentacao = '${novoPlanoAlimentacao.nomePlanoAlimentacao}'
-        WHERE idPlanoAlimentacao = ${idPlanoAlimentacao}`;
+        `UPDATE Exercicio SET
+        nomeExercicio = '${novoExercicio.nomeExercicio}',
+        series        =  ${novoExercicio.series},
+        repeticoes    =  ${novoExercicio.repeticoes},
+        tempoS        =  ${novoExercicio.tempo}
+
+        WHERE idExercicio = ${idExercicio}`;
     
     
         bd.query(query2, (err: MSSQLError) => {
@@ -93,9 +125,9 @@ router.put('/atualizar/:idPlanoAlimentacao', (req: any, res: any) => {
         })
     });
 
-    router.delete('/delete/:idPlanoAlimentacao', (req: Request, res: Response) => {
-        const idPlanoAlimentacao = req.params.idPlanoAlimentacao;
-        const query = `SELECT * FROM PlanoDeAlimentacao WHERE idPlanoAlimentacao = ${idPlanoAlimentacao}`;
+    router.delete('/delete/:idExercicio', (req: Request, res: Response) => {
+        const idExercicio = req.params.idExercicio;
+        const query = `SELECT * FROM Exercicio WHERE idExercicio = ${idExercicio}`;
     
         bd.query(query, (err: MSSQLError, data: Data<JSON>) => {
             if (err) {
@@ -109,7 +141,7 @@ router.put('/atualizar/:idPlanoAlimentacao', (req: any, res: any) => {
     
             }
     
-            const query2 = `DELETE FROM PlanoDeAlimentacao WHERE idPlanoAlimentacao = ${idPlanoAlimentacao}`;
+            const query2 = `DELETE FROM Exercicio WHERE idExercicio = ${idExercicio}`;
             bd.query(query2, (err: MSSQLError) => {
                 if (err) {
                     console.log("> " + err)

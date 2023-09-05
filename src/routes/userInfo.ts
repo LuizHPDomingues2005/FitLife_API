@@ -1,12 +1,12 @@
-require('dotenv').config();
 import { Request, Response, NextFunction } from "express"
+import { MSSQLError, IResult as Data } from "mssql"
 
+require('dotenv').config();
 var router = require('express').Router();
 var bd = require('../bdconfig.js');
 
-import { MSSQLError, IResult as Data } from "mssql"
 
-// getAll
+
 router.get('/get/:idUsuario', (req: Request, res: Response) => {
     const idUsuario = req.params.idUsuario;
     const query = `SELECT * FROM InfoUsuario WHERE idUsuario = ${idUsuario}`;

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 var router = require('express').Router();
 var bd = require('../bdconfig.js');
-// getAll
 router.get('/get/:idUsuario', (req, res) => {
     const idUsuario = req.params.idUsuario;
     const query = `SELECT * FROM InfoUsuario WHERE idUsuario = ${idUsuario}`;

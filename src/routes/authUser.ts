@@ -1,33 +1,33 @@
 var router = require('express').Router();
 var bd = require('../bdconfig.js');
 const requireAuth = require('../middleware/requireAuth')
-const bcrypt = require('bcrypt');
-const jwtUser = require('jsonwebtoken');
 import { Request, Response, NextFunction } from "express"
 import { MSSQLError, IResult as Data } from "mssql"
 
 require('dotenv').config();
-// Cadastro
+const jwtUser = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 router.get('/', (req: Request, res: Response) => {
     const query = 'SELECT * FROM USUARIO';
-
+    
     bd.query(query, (err: MSSQLError, data: Data<JSON>) => {
         if (err) {
             res.status(400).send('Bad Request');
             return;
         }
-
+        
         if (data.recordset[0] == null) {
             res.status(404).send('Not Found')
             return;
         }
-
+        
         res.status(200).send(data.recordsets);
     });
 })
 
 
+// Cadastro
 router.post('/cadastro', (req: Request, res: Response) => {
 
     bcrypt.hash(req.body.senhaUsuario, 10, (err: Error, hash: string) => {
@@ -86,9 +86,9 @@ router.post('/login', (req: Request, res: Response) => {
             }
 
             const user = {
-                id: data.recordset[0].idusuario,
-                username: data.recordset[0].nomeusuario,
-                email: data.recordset[0].emailusuario
+                id: data.recordset[0].idUsuario,
+                username: data.recordset[0].nomeUsuario,
+                email: data.recordset[0].emailUsuario
             }
 
             const tok = jwtUser.sign(JSON.stringify(user), process.env.TOKEN_SECRET);

@@ -22,21 +22,39 @@ router.get('/', (req, res) => {
 });
 // Cadastro
 router.post('/cadastro', (req, res) => {
-    bcrypt.hash(req.body.senhaUsuario, 10, (err, hash) => {
+    const query = `SELECT * FROM Usuario WHERE emailUsuario = '${req.body.emailUsuario}'`;
+    bd.query(query, (err, data) => {
         if (err) {
             console.log("> " + err);
             res.status(500).send('Internal Server Error');
             return;
         }
-        const query = `INSERT INTO USUARIO(nomeUsuario, emailUsuario, senhaUsuario) VALUES ('${req.body.nomeUsuario}', '${req.body.emailUsuario}', '${hash}')`;
-        bd.query(query, (err) => {
-            if (err) {
-                console.log("> " + err);
-                res.status(500).send('Internal Server Error');
-                return;
-            }
-            res.status(201).send("Created");
-        });
+        if (data.recordset[0] == null) {
+            bcrypt.hash(req.body.senhaUsuario, 10, (err, hash) => {
+                if (err) {
+                    console.log("> " + err);
+                    res.status(500).send('Internal Server Error');
+                    return;
+                }
+                const novoUser = {
+                    nomeUsuario: req.body.nomeUsuario,
+                    emailUsuario: req.body.emailUsuario,
+                    senhaUsuario: hash
+                };
+                const query = `INSERT INTO USUARIO(nomeUsuario, emailUsuario, senhaUsuario) VALUES ('${novoUser.nomeUsuario}', '${novoUser.emailUsuario}', '${novoUser.senhaUsuario}')`;
+                bd.query(query, (err, data) => {
+                    if (err) {
+                        console.log("> " + err);
+                        res.status(500).send('Internal Server Error');
+                        return;
+                    }
+                    res.status(201).send("Created");
+                });
+            });
+        }
+        else {
+            res.status(409).send("Email de usuário já cadastrado.");
+        }
     });
 });
 // login
@@ -92,26 +110,39 @@ router.put('/atualizar/:idUsuario', (req, res) => {
             return;
         }
     });
-    bcrypt.hash(req.body.senhaUsuario, 10, (err, hash) => {
+    const query2 = `SELECT * FROM Usuario WHERE emailUsuario = '${req.body.emailUsuario}'`;
+    bd.query(query2, (err, data) => {
         if (err) {
             console.log("> " + err);
             res.status(500).send('Internal Server Error');
             return;
         }
-        const novosDadosuser = {
-            nomeUsuario: req.body.nomeUsuario,
-            emailUsuario: req.body.emailUsuario,
-            senhaUsuario: hash
-        };
-        const query2 = `UPDATE USUARIO SET nomeUsuario = '${novosDadosuser.nomeUsuario}', emailUsuario = '${novosDadosuser.emailUsuario}', senhaUsuario = '${novosDadosuser.senhaUsuario}' WHERE idUsuario = ${idUsuario}`;
-        bd.query(query2, (err) => {
-            if (err) {
-                console.log("> " + err);
-                res.status(500).send('Internal Server Error');
-                return;
-            }
-            res.status(201).send("Updated");
-        });
+        if (data.recordset[0] == null) {
+            bcrypt.hash(req.body.senhaUsuario, 10, (err, hash) => {
+                if (err) {
+                    console.log("> " + err);
+                    res.status(500).send('Internal Server Error');
+                    return;
+                }
+                const novosDadosuser = {
+                    nomeUsuario: req.body.nomeUsuario,
+                    emailUsuario: req.body.emailUsuario,
+                    senhaUsuario: hash
+                };
+                const query2 = `UPDATE USUARIO SET nomeUsuario = '${novosDadosuser.nomeUsuario}', emailUsuario = '${novosDadosuser.emailUsuario}', senhaUsuario = '${novosDadosuser.senhaUsuario}' WHERE idUsuario = ${idUsuario}`;
+                bd.query(query2, (err) => {
+                    if (err) {
+                        console.log("> " + err);
+                        res.status(500).send('Internal Server Error');
+                        return;
+                    }
+                    res.status(201).send("Updated");
+                });
+            });
+        }
+        else {
+            res.status(409).send("Email de usuário já cadastrado.");
+        }
     });
 });
 router.delete('/delete/:idUsuario', (req, res) => {

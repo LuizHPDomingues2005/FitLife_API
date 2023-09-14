@@ -1,0 +1,50 @@
+Links para rotas
+
+User:
+    get(all): http://localhost:3000/user
+    cadastro(post): http://localhost:3000/user/cadastro
+        json:
+            {
+                "idUsuario": 0,
+                "nomeUsuario": "",
+                "emailUsuario": "",
+                "senhaUsuario": ""
+            }
+    put: http://localhost:3000/user/atualizar/:idUsuario
+        json:
+            {
+                "nomeUsuario": "",
+                "emailUsuario": "",
+                "senhaUsuario": ""
+            }
+    delete: http://localhost:3000/user/delete/:idUsuario
+
+    login(post): http://localhost:3000/user/login
+        json:
+            {
+                "emailUsuario": "",
+	            "senhaUsuario": ""
+            }
+
+InfoUser:
+    get(um): http://localhost:3000/infouser/get/:idUsuario
+    post: http://localhost:3000/infouser/cadastro
+        json:
+            {
+                "idUsuario": 0,
+                "peso": 0,
+                "idade": 0,
+                "genero": "", # M ou F
+                "altura": 0 # EM CENTIMETROS
+            }
+    put: http://localhost:3000/infouser/atualizar/:idUsuario
+        json:
+            {
+                "peso": 0,
+                "idade": 0,
+                "genero": "", # M ou F
+                "altura": 0 # EM CENTIMETROS
+            }
+    delete: FEITO COM user/delete
+
+    

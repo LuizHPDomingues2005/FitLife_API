@@ -6,13 +6,11 @@ var router = require('express').Router();
 var bd = require('../bdconfig.js');
 
 
-// getAll
-router.get('/get/', (req: Request, res: Response) => {
-    const query = `SELECT * FROM Exercicio`;
+router.get('/', (req: Request, res: Response) => {
+    const query = 'SELECT * FROM Ingrediente';
 
-    bd.query(query, (err: any, data: any) => {
+    bd.query(query, (err: MSSQLError, data: Data<JSON>) => {
         if (err) {
-            console.log("> " + err)
             res.status(400).send('Bad Request');
             return;
         }
@@ -24,12 +22,12 @@ router.get('/get/', (req: Request, res: Response) => {
 
         res.status(200).send(data.recordsets);
     });
-});
+})
 
 
-router.get('/get/:idExercicio', (req: Request, res: Response) => {
-    const idExercicio = req.params.idExercicio;
-    const query = `SELECT * FROM Exercicio WHERE idExercicio = ${idExercicio}`;
+router.get('/get/:idIngrediente', (req: Request, res: Response) => {
+    const idIngrediente = req.params.idIngrediente;
+    const query = `SELECT * FROM Ingrediente WHERE idIngrediente = ${idIngrediente}`;
 
     bd.query(query, (err: any, data: any) => {
         if (err) {
@@ -49,25 +47,30 @@ router.get('/get/:idExercicio', (req: Request, res: Response) => {
 
 router.post('/cadastro', (req: Request, res: Response) => {
 
-    const novoExercicio = {
-        nomeExercicio: req.body.nomeExercicio,
-        series       : req.body.series,
-        repeticoes   : req.body.repeticoes,
-        tempo        : req.body.tempo,
-        intensidade  : req.body.intensidade,
-        idMusculo    : req.body.idMusculo
+    const novoIngrediente = {
+        nomeIngrediente: req.body.nomeIngrediente,
+        valorEnergetico: req.body.valorEnergetico,
+        carb           : req.body.carb,
+        proteinas      : req.body.proteinas,
+        gorduras       : req.body.gorduras,
+        sodio          : req.body.sodio
     }
 
     const query =
-        `INSERT INTO Exercicio 
-        (nomeExercicio, series, repeticoes, tempoS, intensidade, idMusculo)
+        `INSERT INTO Ingrediente 
+        (nomeIngrediente,
+         valorEnergetico,
+         carb,
+         proteinas,
+         gorduras,
+         sodio)
         values 
-        ('${novoExercicio.nomeExercicio}',
-          ${novoExercicio.series},
-          ${novoExercicio.repeticoes},
-          ${novoExercicio.tempo},
-          ${novoExercicio.intensidade},
-          ${novoExercicio.idMusculo})`
+        ('${novoIngrediente.nomeIngrediente}',
+          ${novoIngrediente.valorEnergetico},
+          ${novoIngrediente.carb},
+          ${novoIngrediente.proteinas},
+          ${novoIngrediente.gorduras},
+          ${novoIngrediente.sodio})`
 
     bd.query(query, (err: MSSQLError) => {
         if (err) {
@@ -81,10 +84,10 @@ router.post('/cadastro', (req: Request, res: Response) => {
     })
 });
 
-router.put('/atualizar/:idExercicio', (req: any, res: any) => {
+router.put('/atualizar/:idIngrediente', (req: any, res: any) => {
 
-    const idExercicio = req.params.idExercicio;
-    const query = `SELECT * FROM Exercicio WHERE idExercicio = ${idExercicio}`;
+    const idIngrediente = req.params.idIngrediente;
+    const query = `SELECT * FROM Ingrediente WHERE idIngrediente = ${idIngrediente}`;
 
     bd.query(query, (err: MSSQLError, data: Data<JSON>) => {
         if (err) {
@@ -97,26 +100,25 @@ router.put('/atualizar/:idExercicio', (req: any, res: any) => {
             return;
         }
         
-        const novoExercicio = {
-            nomeExercicio: req.body.nomeExercicio,
-            series       : req.body.series,
-            repeticoes   : req.body.repeticoes,
-            tempo        : req.body.tempo,
-            intensidade  : req.body.intensidade,
-            idMusculo    : req.body.idMusculo
+        const novoIngrediente = {
+            nomeIngrediente: req.body.nomeIngrediente,
+            valorEnergetico: req.body.valorEnergetico,
+            carb           : req.body.carb,
+            proteinas      : req.body.proteinas,
+            gorduras       : req.body.gorduras,
+            sodio          : req.body.sodio
         }
     
     
         const query2 =
-        `UPDATE Exercicio SET
-        nomeExercicio = '${novoExercicio.nomeExercicio}',
-        series        =  ${novoExercicio.series},
-        repeticoes    =  ${novoExercicio.repeticoes},
-        tempoS        =  ${novoExercicio.tempo},
-        intensidade   =  ${novoExercicio.intensidade},
-        idMusculo     =  ${novoExercicio.idMusculo}
-
-        WHERE idExercicio = ${idExercicio}`;
+        `UPDATE Ingrediente SET
+        nomeIngrediente = '${novoIngrediente.nomeIngrediente}',
+        valorEnergetico =  ${novoIngrediente.valorEnergetico},
+        carb            =  ${novoIngrediente.carb},
+        proteinas       =  ${novoIngrediente.proteinas},
+        gorduras        =  ${novoIngrediente.gorduras},
+        sodio           =  ${novoIngrediente.sodio}
+        WHERE idIngrediente = ${idIngrediente}`;
     
     
         bd.query(query2, (err: MSSQLError) => {
@@ -133,9 +135,9 @@ router.put('/atualizar/:idExercicio', (req: any, res: any) => {
         })
     });
 
-    router.delete('/delete/:idExercicio', (req: Request, res: Response) => {
-        const idExercicio = req.params.idExercicio;
-        const query = `SELECT * FROM Exercicio WHERE idExercicio = ${idExercicio}`;
+    router.delete('/delete/:idIngrediente', (req: Request, res: Response) => {
+        const idIngrediente = req.params.idIngrediente;
+        const query = `SELECT * FROM Ingrediente WHERE idIngrediente = ${idIngrediente}`;
     
         bd.query(query, (err: MSSQLError, data: Data<JSON>) => {
             if (err) {
@@ -149,7 +151,7 @@ router.put('/atualizar/:idExercicio', (req: any, res: any) => {
     
             }
     
-            const query2 = `DELETE FROM Exercicio WHERE idExercicio = ${idExercicio}`;
+            const query2 = `DELETE FROM Ingrediente WHERE idIngrediente = ${idIngrediente}`;
             bd.query(query2, (err: MSSQLError) => {
                 if (err) {
                     console.log("> " + err)

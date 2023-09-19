@@ -19,13 +19,14 @@ app.use(cors())
 //////////////////////////////////////////////////////////////////////
 
 // rotas
-app.use('/user', require('./routes/authUser.js'));
+app.use('/user', require('./routes/user.js'));
 app.use('/infouser', require('./routes/userInfo.js'))
 app.use('/planoAlimentacao', require('./routes/planoAlimentacao.js'))
 app.use('/planoTreino', require('./routes/planoTreino.js'))
 app.use('/cardapio', require('./routes/cardapio.js'))
 app.use('/exercicio', require('./routes/exercicio.js'))
-
+app.use('/ingrediente', require('./routes/ingrediente.js'))
+app.use('/musculo', require('./routes/musculo.js'))
 
 
 //////////////////////////////////////////////////////////////////////

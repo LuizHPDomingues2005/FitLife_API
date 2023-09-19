@@ -45,6 +45,6 @@ InfoUser:
                 "genero": "", # M ou F
                 "altura": 0 # EM CENTIMETROS
             }
-    delete: FEITO COM user/delete
+    delete: FEITO COM user/delete/:idUsuario
 
     

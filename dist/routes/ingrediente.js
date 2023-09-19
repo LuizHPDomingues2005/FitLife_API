@@ -3,12 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 var router = require('express').Router();
 var bd = require('../bdconfig.js');
-// getAll
-router.get('/get/', (req, res) => {
-    const query = `SELECT * FROM Exercicio`;
+router.get('/', (req, res) => {
+    const query = 'SELECT * FROM Ingrediente';
     bd.query(query, (err, data) => {
         if (err) {
-            console.log("> " + err);
             res.status(400).send('Bad Request');
             return;
         }
@@ -19,9 +17,9 @@ router.get('/get/', (req, res) => {
         res.status(200).send(data.recordsets);
     });
 });
-router.get('/get/:idExercicio', (req, res) => {
-    const idExercicio = req.params.idExercicio;
-    const query = `SELECT * FROM Exercicio WHERE idExercicio = ${idExercicio}`;
+router.get('/get/:idIngrediente', (req, res) => {
+    const idIngrediente = req.params.idIngrediente;
+    const query = `SELECT * FROM Ingrediente WHERE idIngrediente = ${idIngrediente}`;
     bd.query(query, (err, data) => {
         if (err) {
             console.log("> " + err);
@@ -36,23 +34,28 @@ router.get('/get/:idExercicio', (req, res) => {
     });
 });
 router.post('/cadastro', (req, res) => {
-    const novoExercicio = {
-        nomeExercicio: req.body.nomeExercicio,
-        series: req.body.series,
-        repeticoes: req.body.repeticoes,
-        tempo: req.body.tempo,
-        intensidade: req.body.intensidade,
-        idMusculo: req.body.idMusculo
+    const novoIngrediente = {
+        nomeIngrediente: req.body.nomeIngrediente,
+        valorEnergetico: req.body.valorEnergetico,
+        carb: req.body.carb,
+        proteinas: req.body.proteinas,
+        gorduras: req.body.gorduras,
+        sodio: req.body.sodio
     };
-    const query = `INSERT INTO Exercicio 
-        (nomeExercicio, series, repeticoes, tempoS, intensidade, idMusculo)
+    const query = `INSERT INTO Ingrediente 
+        (nomeIngrediente,
+         valorEnergetico,
+         carb,
+         proteinas,
+         gorduras,
+         sodio)
         values 
-        ('${novoExercicio.nomeExercicio}',
-          ${novoExercicio.series},
-          ${novoExercicio.repeticoes},
-          ${novoExercicio.tempo},
-          ${novoExercicio.intensidade},
-          ${novoExercicio.idMusculo})`;
+        ('${novoIngrediente.nomeIngrediente}',
+          ${novoIngrediente.valorEnergetico},
+          ${novoIngrediente.carb},
+          ${novoIngrediente.proteinas},
+          ${novoIngrediente.gorduras},
+          ${novoIngrediente.sodio})`;
     bd.query(query, (err) => {
         if (err) {
             console.log("> " + err);
@@ -62,9 +65,9 @@ router.post('/cadastro', (req, res) => {
         res.status(201).send("Created");
     });
 });
-router.put('/atualizar/:idExercicio', (req, res) => {
-    const idExercicio = req.params.idExercicio;
-    const query = `SELECT * FROM Exercicio WHERE idExercicio = ${idExercicio}`;
+router.put('/atualizar/:idIngrediente', (req, res) => {
+    const idIngrediente = req.params.idIngrediente;
+    const query = `SELECT * FROM Ingrediente WHERE idIngrediente = ${idIngrediente}`;
     bd.query(query, (err, data) => {
         if (err) {
             console.log("> " + err);
@@ -75,23 +78,22 @@ router.put('/atualizar/:idExercicio', (req, res) => {
             res.status(404).send('Not Found');
             return;
         }
-        const novoExercicio = {
-            nomeExercicio: req.body.nomeExercicio,
-            series: req.body.series,
-            repeticoes: req.body.repeticoes,
-            tempo: req.body.tempo,
-            intensidade: req.body.intensidade,
-            idMusculo: req.body.idMusculo
+        const novoIngrediente = {
+            nomeIngrediente: req.body.nomeIngrediente,
+            valorEnergetico: req.body.valorEnergetico,
+            carb: req.body.carb,
+            proteinas: req.body.proteinas,
+            gorduras: req.body.gorduras,
+            sodio: req.body.sodio
         };
-        const query2 = `UPDATE Exercicio SET
-        nomeExercicio = '${novoExercicio.nomeExercicio}',
-        series        =  ${novoExercicio.series},
-        repeticoes    =  ${novoExercicio.repeticoes},
-        tempoS        =  ${novoExercicio.tempo},
-        intensidade   =  ${novoExercicio.intensidade},
-        idMusculo     =  ${novoExercicio.idMusculo}
-
-        WHERE idExercicio = ${idExercicio}`;
+        const query2 = `UPDATE Ingrediente SET
+        nomeIngrediente = '${novoIngrediente.nomeIngrediente}',
+        valorEnergetico =  ${novoIngrediente.valorEnergetico},
+        carb            =  ${novoIngrediente.carb},
+        proteinas       =  ${novoIngrediente.proteinas},
+        gorduras        =  ${novoIngrediente.gorduras},
+        sodio           =  ${novoIngrediente.sodio}
+        WHERE idIngrediente = ${idIngrediente}`;
         bd.query(query2, (err) => {
             if (err) {
                 console.log("> " + err);
@@ -102,9 +104,9 @@ router.put('/atualizar/:idExercicio', (req, res) => {
         res.status(201).send("Updated");
     });
 });
-router.delete('/delete/:idExercicio', (req, res) => {
-    const idExercicio = req.params.idExercicio;
-    const query = `SELECT * FROM Exercicio WHERE idExercicio = ${idExercicio}`;
+router.delete('/delete/:idIngrediente', (req, res) => {
+    const idIngrediente = req.params.idIngrediente;
+    const query = `SELECT * FROM Ingrediente WHERE idIngrediente = ${idIngrediente}`;
     bd.query(query, (err, data) => {
         if (err) {
             console.log("> " + err);
@@ -115,7 +117,7 @@ router.delete('/delete/:idExercicio', (req, res) => {
             res.status(404).send('Not found');
             return;
         }
-        const query2 = `DELETE FROM Exercicio WHERE idExercicio = ${idExercicio}`;
+        const query2 = `DELETE FROM Ingrediente WHERE idIngrediente = ${idIngrediente}`;
         bd.query(query2, (err) => {
             if (err) {
                 console.log("> " + err);

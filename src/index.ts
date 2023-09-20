@@ -28,6 +28,9 @@ app.use('/exercicio', require('./routes/exercicio.js'))
 app.use('/ingrediente', require('./routes/ingrediente.js'))
 app.use('/musculo', require('./routes/musculo.js'))
 
+app.use('/alimentacaoCardapio', require('./routes/alimentacaoCardapio,js'))
+app.use('/cardapioIngrediente', require('./routes/cardapioIngrediente'))
+
 
 //////////////////////////////////////////////////////////////////////
 

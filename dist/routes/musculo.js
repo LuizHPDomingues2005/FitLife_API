@@ -3,6 +3,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 var router = require('express').Router();
 var bd = require('../bdconfig.js');
+router.get('/get/', (req, res) => {
+    const query = `SELECT * FROM Musculo`;
+    bd.query(query, (err, data) => {
+        if (err) {
+            console.log("> " + err);
+            res.status(400).send('Bad Request');
+            return;
+        }
+        if (data.recordset[0] == null) {
+            res.status(404).send('Not Found');
+            return;
+        }
+        res.status(200).send(data.recordsets[0]);
+    });
+});
 router.get('/get/:idMusculo', (req, res) => {
     const idMusculo = req.params.idMusculo;
     const query = `SELECT * FROM Musculo WHERE idMusculo = ${idMusculo}`;

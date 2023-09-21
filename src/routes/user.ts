@@ -206,7 +206,8 @@ router.delete('/delete/:idUsuario', (req: Request, res: Response) => {
             return;
 
         }
-        const query2 = `DELETE FROM InfoUsuario WHERE idUsuario = ${idUsuario}`;
+
+        const query2 = `DELETE FROM UsuarioAlimentacao WHERE idUsuario = ${idUsuario}`;
 
         bd.query(query2, (err: MSSQLError) => {
             if (err) {
@@ -216,7 +217,28 @@ router.delete('/delete/:idUsuario', (req: Request, res: Response) => {
             }
         })
 
-        const query3 = `DELETE FROM USUARIO WHERE idUsuario = ${idUsuario}`;
+        const query3 = `DELETE FROM UsuarioTreino WHERE idUsuario = ${idUsuario}`;
+
+        bd.query(query2, (err: MSSQLError) => {
+            if (err) {
+                console.log("> " + err)
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+        })
+
+
+        const query4 = `DELETE FROM InfoUsuario WHERE idUsuario = ${idUsuario}`;
+
+        bd.query(query2, (err: MSSQLError) => {
+            if (err) {
+                console.log("> " + err)
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+        })
+
+        const query5 = `DELETE FROM USUARIO WHERE idUsuario = ${idUsuario}`;
         bd.query(query3, (err: MSSQLError) => {
             if (err) {
                 console.log("> " + err)

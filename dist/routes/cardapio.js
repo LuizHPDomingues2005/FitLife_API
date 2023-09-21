@@ -21,12 +21,14 @@ router.get('/get/:idCardapio', (req, res) => {
 });
 router.post('/cadastro', (req, res) => {
     const novoCardapio = {
-        nomeCardapio: req.body.nomeCardapio
+        nomeCardapio: req.body.nomeCardapio,
+        periodo: req.body.periodo
     };
     const query = `INSERT INTO Cardapio 
-        (nomeCardapio)
+        (nomeCardapio, periodo)
         values 
-        ('${novoCardapio.nomeCardapio}')`;
+        ('${novoCardapio.nomeCardapio}',
+          ${novoCardapio.periodo})`;
     bd.query(query, (err) => {
         if (err) {
             console.log("> " + err);
@@ -50,10 +52,12 @@ router.put('/atualizar/:idCardapio', (req, res) => {
             return;
         }
         const novoCardapio = {
-            nomeCardapio: req.body.nomeCardapio
+            nomeCardapio: req.body.nomeCardapio,
+            periodo: req.body.periodo
         };
         const query2 = `UPDATE Cardapio SET
-        nomeCardapio = '${novoCardapio.nomeCardapio}'
+        nomeCardapio = '${novoCardapio.nomeCardapio}',
+        periodo      =  ${novoCardapio.periodo}
         WHERE idCardapio = ${idCardapio}`;
         bd.query(query2, (err) => {
             if (err) {

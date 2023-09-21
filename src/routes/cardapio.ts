@@ -29,14 +29,16 @@ router.get('/get/:idCardapio', (req: Request, res: Response) => {
 router.post('/cadastro', (req: Request, res: Response) => {
 
     const novoCardapio = {
-        nomeCardapio: req.body.nomeCardapio
+        nomeCardapio: req.body.nomeCardapio,
+        periodo     : req.body.periodo
     }
 
     const query =
         `INSERT INTO Cardapio 
-        (nomeCardapio)
+        (nomeCardapio, periodo)
         values 
-        ('${novoCardapio.nomeCardapio}')`
+        ('${novoCardapio.nomeCardapio}',
+          ${novoCardapio.periodo})`
 
     bd.query(query, (err: MSSQLError) => {
         if (err) {
@@ -67,13 +69,15 @@ router.put('/atualizar/:idCardapio', (req: any, res: any) => {
         }
         
         const novoCardapio = {
-            nomeCardapio: req.body.nomeCardapio
+            nomeCardapio: req.body.nomeCardapio,
+            periodo     : req.body.periodo
         }
     
     
         const query2 =
         `UPDATE Cardapio SET
-        nomeCardapio = '${novoCardapio.nomeCardapio}'
+        nomeCardapio = '${novoCardapio.nomeCardapio}',
+        periodo      =  ${novoCardapio.periodo}
         WHERE idCardapio = ${idCardapio}`;
     
     

@@ -1,3 +1,10 @@
+FitLife API:
+    Essa é a parte Back-End do aplicativo de exercícios e alimentação FitLife
+    (Front-End do projeto disponível em: https://github.com/MatheusFreire7/flutter_TCC)
+
+    Em resumo, com a API será possível fazer o cadastro e login dos usuários
+
+
 Links para rotas
 
 User:

@@ -55,18 +55,20 @@ router.post('/cadastro', (req: Request, res: Response) => {
         repeticoes   : req.body.repeticoes,
         tempo        : req.body.tempo,
         intensidade  : req.body.intensidade,
+        imageUrl     : req.body.imageUrl,
         idMusculo    : req.body.idMusculo
     }
 
     const query =
         `INSERT INTO Exercicio 
-        (nomeExercicio, series, repeticoes, tempoS, intensidade, idMusculo)
+        (nomeExercicio, series, repeticoes, tempoS, intensidade, imageUrl, idMusculo)
         values 
         ('${novoExercicio.nomeExercicio}',
           ${novoExercicio.series},
           ${novoExercicio.repeticoes},
           ${novoExercicio.tempo},
           ${novoExercicio.intensidade},
+          "${novoExercicio.imageUrl}",
           ${novoExercicio.idMusculo})`
 
     bd.query(query, (err: MSSQLError) => {
@@ -103,6 +105,7 @@ router.put('/atualizar/:idExercicio', (req: any, res: any) => {
             repeticoes   : req.body.repeticoes,
             tempo        : req.body.tempo,
             intensidade  : req.body.intensidade,
+            imageUrl     : req.body.imageUrl,
             idMusculo    : req.body.idMusculo
         }
     
@@ -114,6 +117,7 @@ router.put('/atualizar/:idExercicio', (req: any, res: any) => {
         repeticoes    =  ${novoExercicio.repeticoes},
         tempoS        =  ${novoExercicio.tempo},
         intensidade   =  ${novoExercicio.intensidade},
+        imageUrl      =  "${novoExercicio.imageUrl}",
         idMusculo     =  ${novoExercicio.idMusculo}
 
         WHERE idExercicio = ${idExercicio}`;

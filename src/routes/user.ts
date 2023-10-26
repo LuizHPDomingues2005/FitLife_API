@@ -8,7 +8,7 @@ require('dotenv').config();
 const jwtUser = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/get/', (req: Request, res: Response) => {
     const query = 'SELECT * FROM USUARIO';
 
     bd.query(query, (err: MSSQLError, data: Data<JSON>) => {

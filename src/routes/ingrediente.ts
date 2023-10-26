@@ -6,7 +6,7 @@ var router = require('express').Router();
 var bd = require('../bdconfig.js');
 
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/get/', (req: Request, res: Response) => {
     const query = 'SELECT * FROM Ingrediente';
 
     bd.query(query, (err: MSSQLError, data: Data<JSON>) => {

@@ -6,7 +6,7 @@ const requireAuth = require('../middleware/requireAuth');
 require('dotenv').config();
 const jwtUser = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-router.get('/', (req, res) => {
+router.get('/get/', (req, res) => {
     const query = 'SELECT * FROM USUARIO';
     bd.query(query, (err, data) => {
         if (err) {

@@ -6,6 +6,26 @@ var router = require('express').Router();
 var bd = require('../bdconfig.js');
 
 
+router.get('/get/', (req: Request, res: Response) => {
+    const query = `SELECT * FROM CardapioIngrediente`;
+
+    bd.query(query, (err: any, data: any) => {
+        if (err) {
+            console.log("> " + err)
+            res.status(400).send('Bad Request');
+            return;
+        }
+
+        if (data.recordset[0] == null) {
+            res.status(404).send('Not Found')
+            return;
+        }
+
+        res.status(200).send(data.recordsets[0]);
+    });
+});
+
+
 router.get('/get/:idCardapio', (req: Request, res: Response) => {
     const idCardapio = req.params.idCardapio;
     const query = `SELECT * FROM CardapioIngrediente WHERE idCardapio = ${idCardapio}`;

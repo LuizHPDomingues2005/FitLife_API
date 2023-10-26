@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 var router = require('express').Router();
 var bd = require('../bdconfig.js');
-router.get('/', (req, res) => {
+router.get('/get/', (req, res) => {
     const query = 'SELECT * FROM Ingrediente';
     bd.query(query, (err, data) => {
         if (err) {

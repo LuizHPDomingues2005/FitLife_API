@@ -1,17 +1,18 @@
 FitLife API:
     Essa é a parte Back-End do aplicativo de exercícios e alimentação FitLife
     (Front-End do projeto disponível em: https://github.com/MatheusFreire7/flutter_TCC)
-
     Em resumo, com a API será possível fazer o cadastro e login dos usuários, e inserção rápida de novos dados de planos de treino e alimentação para o aplicativo.
 
 
 Links para rotas
 
 Rotas que compôem a interação com usuário:
+
 	Usuário: http://localhost:{port}/user
 	InfoUser: http://localhost:{port}/infoUser
 
 Rotas que compôem a alimentação:
+
 	Ingrediente: http://localhost:{port}/ingrediente
  	Cardapio: http://localhost:{port}/cardapio
 	Ligação de cardapio e ingrediente: http://localhost:{port}/cardapioIngrediente
@@ -20,6 +21,7 @@ Rotas que compôem a alimentação:
   	Ligação de usuário com plano de alimentação: http://localhost:{port}/usuarioAlimentacao
 	
 Rotas que compôem o treino:
+
 	Musculo: http://localhost:{port}/musculo
  	Exercicio: http://localhost:{port}/exercicio
   	Plano de treino: http://localhost:{port}/planoTreino

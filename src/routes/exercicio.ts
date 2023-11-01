@@ -26,10 +26,52 @@ router.get('/get/', (req: Request, res: Response) => {
     });
 });
 
-
-router.get('/get/:idExercicio', (req: Request, res: Response) => {
+// byId
+router.get('/get/id/:idExercicio', (req: Request, res: Response) => {
     const idExercicio = req.params.idExercicio;
     const query = `SELECT * FROM Exercicio WHERE idExercicio = ${idExercicio}`;
+
+    bd.query(query, (err: any, data: any) => {
+        if (err) {
+            console.log("> " + err)
+            res.status(400).send('Bad Request');
+            return;
+        }
+
+        if (data.recordset[0] == null) {
+            res.status(404).send('Not Found')
+            return;
+        }
+
+        res.status(200).send(data.recordsets[0]);
+    });
+});
+
+// byIntensidade
+router.get('/get/intensidade/:intensidade', (req: Request, res: Response) => {
+    const intensidade = req.params.intensidade;
+    const query = `SELECT * FROM Exercicio WHERE ciclo = ${intensidade}`;
+
+    bd.query(query, (err: any, data: any) => {
+        if (err) {
+            console.log("> " + err)
+            res.status(400).send('Bad Request');
+            return;
+        }
+
+        if (data.recordset[0] == null) {
+            res.status(404).send('Not Found')
+            return;
+        }
+
+        res.status(200).send(data.recordsets[0]);
+    });
+});
+
+// byCiclo
+router.get('/get/ciclo/:ciclo', (req: Request, res: Response) => {
+    const ciclo = req.params.ciclo;
+    const query = `SELECT * FROM Exercicio WHERE ciclo = '${ciclo}'`;
 
     bd.query(query, (err: any, data: any) => {
         if (err) {
@@ -56,19 +98,21 @@ router.post('/cadastro', (req: Request, res: Response) => {
         tempo        : req.body.tempo,
         intensidade  : req.body.intensidade,
         imageUrl     : req.body.imageUrl,
+        ciclo        : req.body.ciclo,
         idMusculo    : req.body.idMusculo
     }
 
     const query =
         `INSERT INTO Exercicio 
-        (nomeExercicio, series, repeticoes, tempoS, intensidade, imageUrl, idMusculo)
+        (nomeExercicio, series, repeticoes, tempoS, intensidade, imageUrl, ciclo, idMusculo)
         values 
         ('${novoExercicio.nomeExercicio}',
           ${novoExercicio.series},
           ${novoExercicio.repeticoes},
           ${novoExercicio.tempo},
           ${novoExercicio.intensidade},
-          "${novoExercicio.imageUrl}",
+          '${novoExercicio.imageUrl}',
+          '${novoExercicio.ciclo}',
           ${novoExercicio.idMusculo})`
 
     bd.query(query, (err: MSSQLError) => {
@@ -106,6 +150,7 @@ router.put('/atualizar/:idExercicio', (req: any, res: any) => {
             tempo        : req.body.tempo,
             intensidade  : req.body.intensidade,
             imageUrl     : req.body.imageUrl,
+            ciclo        : req.body.ciclo,
             idMusculo    : req.body.idMusculo
         }
     
@@ -118,6 +163,7 @@ router.put('/atualizar/:idExercicio', (req: any, res: any) => {
         tempoS        =  ${novoExercicio.tempo},
         intensidade   =  ${novoExercicio.intensidade},
         imageUrl      =  "${novoExercicio.imageUrl}",
+        ciclo         =  ${novoExercicio.ciclo},
         idMusculo     =  ${novoExercicio.idMusculo}
 
         WHERE idExercicio = ${idExercicio}`;

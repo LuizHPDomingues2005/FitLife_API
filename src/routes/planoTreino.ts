@@ -48,14 +48,16 @@ router.get('/get/:idPlanoTreino', (req: Request, res: Response) => {
 router.post('/cadastro', (req: Request, res: Response) => {
 
     const novoPlanoTreino = {
-        nomePlanoTreino: req.body.nomePlanoTreino
+        nomePlanoTreino: req.body.nomePlanoTreino,
+        intensidade    : req.body.intensidade
     }
 
     const query =
         `INSERT INTO PlanoDeTreino 
-        (nomePlanoTreino)
+        (nomePlanoTreino, intensidade)
         values 
-        ('${novoPlanoTreino.nomePlanoTreino}')`
+        ('${novoPlanoTreino.nomePlanoTreino}',
+          ${novoPlanoTreino.intensidade})`
 
     bd.query(query, (err: MSSQLError) => {
         if (err) {
@@ -86,13 +88,15 @@ router.put('/atualizar/:idPlanoTreino', (req: any, res: any) => {
         }
 
         const novoPlanoTreino = {
-            nomePlanoTreino: req.body.nomePlanoTreino
+            nomePlanoTreino: req.body.nomePlanoTreino,
+            intensidade    : req.body.intensidade
         }
 
 
         const query2 =
             `UPDATE PlanoDeTreino SET
-        nomePlanoTreino = '${novoPlanoTreino.nomePlanoTreino}'
+        nomePlanoTreino = '${novoPlanoTreino.nomePlanoTreino}',
+        intensidade     =  ${novoPlanoTreino.intensidade}
         WHERE idPlanoTreino = ${idPlanoTreino}`;
 
 

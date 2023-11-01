@@ -36,12 +36,14 @@ router.get('/get/:idPlanoTreino', (req, res) => {
 });
 router.post('/cadastro', (req, res) => {
     const novoPlanoTreino = {
-        nomePlanoTreino: req.body.nomePlanoTreino
+        nomePlanoTreino: req.body.nomePlanoTreino,
+        intensidade: req.body.intensidade
     };
     const query = `INSERT INTO PlanoDeTreino 
-        (nomePlanoTreino)
+        (nomePlanoTreino, intensidade)
         values 
-        ('${novoPlanoTreino.nomePlanoTreino}')`;
+        ('${novoPlanoTreino.nomePlanoTreino}',
+          ${novoPlanoTreino.intensidade})`;
     bd.query(query, (err) => {
         if (err) {
             console.log("> " + err);
@@ -65,10 +67,12 @@ router.put('/atualizar/:idPlanoTreino', (req, res) => {
             return;
         }
         const novoPlanoTreino = {
-            nomePlanoTreino: req.body.nomePlanoTreino
+            nomePlanoTreino: req.body.nomePlanoTreino,
+            intensidade: req.body.intensidade
         };
         const query2 = `UPDATE PlanoDeTreino SET
-        nomePlanoTreino = '${novoPlanoTreino.nomePlanoTreino}'
+        nomePlanoTreino = '${novoPlanoTreino.nomePlanoTreino}',
+        intensidade     =  ${novoPlanoTreino.intensidade}
         WHERE idPlanoTreino = ${idPlanoTreino}`;
         bd.query(query2, (err) => {
             if (err) {

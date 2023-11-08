@@ -162,8 +162,8 @@ router.put('/atualizar/:idExercicio', (req: any, res: any) => {
         repeticoes    =  ${novoExercicio.repeticoes},
         tempoS        =  ${novoExercicio.tempo},
         intensidade   =  ${novoExercicio.intensidade},
-        imageUrl      =  "${novoExercicio.imageUrl}",
-        ciclo         =  ${novoExercicio.ciclo},
+        imageUrl      =  '${novoExercicio.imageUrl}',
+        ciclo         =  '${novoExercicio.ciclo}',
         idMusculo     =  ${novoExercicio.idMusculo}
 
         WHERE idExercicio = ${idExercicio}`;

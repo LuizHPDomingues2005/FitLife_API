@@ -54,7 +54,8 @@ router.post('/cadastro', (req: Request, res: Response) => {
         proteinas      : req.body.proteinas,
         gorduras       : req.body.gorduras,
         sodio          : req.body.sodio,
-        periodo        : req.body.periodo
+        periodo        : req.body.periodo,
+        imageUrl       : req.body.imageUrl
     }
 
     const query =
@@ -65,7 +66,8 @@ router.post('/cadastro', (req: Request, res: Response) => {
          proteinas,
          gorduras,
          sodio,
-         periodo)
+         periodo,
+         imageUrl)
         values 
         ('${novoCardapio.nomeCardapio}',
           ${novoCardapio.valorEnergetico},
@@ -73,7 +75,8 @@ router.post('/cadastro', (req: Request, res: Response) => {
           ${novoCardapio.proteinas},
           ${novoCardapio.gorduras},
           ${novoCardapio.sodio},
-          ${novoCardapio.periodo})`
+          ${novoCardapio.periodo},
+          ${novoCardapio.imageUrl})`
 
     bd.query(query, (err: MSSQLError) => {
         if (err) {
@@ -110,7 +113,8 @@ router.put('/atualizar/:idCardapio', (req: any, res: any) => {
             proteinas      : req.body.proteinas,
             gorduras       : req.body.gorduras,
             sodio          : req.body.sodio,
-            periodo        : req.body.periodo
+            periodo        : req.body.periodo,
+            imageUrl       : req.body.imageUrl
         }
     
     
@@ -122,7 +126,8 @@ router.put('/atualizar/:idCardapio', (req: any, res: any) => {
         proteinas       =  ${novoCardapio.proteinas},
         gorduras        =  ${novoCardapio.gorduras},
         sodio           =  ${novoCardapio.sodio},
-        periodo         =  ${novoCardapio.periodo}
+        periodo         =  ${novoCardapio.periodo},
+        imageUrl        = '${novoCardapio.imageUrl.replace("'", "''")}'
         WHERE idCardapio = ${idCardapio}`;
     
     

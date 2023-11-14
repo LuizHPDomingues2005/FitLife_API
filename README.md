@@ -15,25 +15,47 @@ E por fim, para ligar a API, digite o seguinte comando:
 
         node dist
 
-===============================================================================================================
+====================================================================================================
 
 Links para rotas:
 Rotas que compôem a interação com usuário:
 
-	Usuário: http://localhost:{port}/user
-	InfoUser: http://localhost:{port}/infoUser
+Usuário: 
+	
+ 	http://localhost:{port}/user
+	
+ InfoUser: 
+ 
+ 	http://localhost:{port}/infoUser
 
-===============================================================================================================
+====================================================================================================
 Rotas que compôem a alimentação:
 
-	Ingrediente: http://localhost:{port}/ingrediente
- 	Cardapio: http://localhost:{port}/cardapio
-	Ligação de cardapio e ingrediente: http://localhost:{port}/cardapioIngrediente
-  	Plano de alimentação: http://localhost:{port}/planoAlimentacao
- 	Ligação de plano de alimentação com cardapio: http://localhost:{port}/alimentacaoCardapio
-  	Ligação de usuário com plano de alimentação: http://localhost:{port}/usuarioAlimentacao
+Ingrediente: 
+	
+ 	http://localhost:{port}/ingrediente
+ 	
+  Cardapio: 
+  
+  	http://localhost:{port}/cardapio
+	
+ Ligação de cardapio e ingrediente:
+ 	
+  	http://localhost:{port}/cardapioIngrediente
+  	
+   Plano de alimentação:
+   	
+    	http://localhost:{port}/planoAlimentacao
+ 	
+  Ligação de plano de alimentação com cardapio:
+  
+  	http://localhost:{port}/alimentacaoCardapio
+  	
+   Ligação de usuário com plano de alimentação: 
+   
+   	http://localhost:{port}/usuarioAlimentacao
 
-===============================================================================================================
+====================================================================================================
  
 Rotas que compôem o treino:
 
